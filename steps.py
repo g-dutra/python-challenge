@@ -43,3 +43,30 @@ def challenge3():
             print(result)
         
     # a letra em lowercase no meio de cada linha forma o próximo link: linkedlist
+
+def challenge4():
+    import urllib.request
+    import re
+    
+    
+    def geturl(purl, count):
+        with urllib.request.urlopen('http://www.pythonchallenge.com/pc/def/linkedlist.php?nothing='+purl) as url:
+            text = url.read().decode('utf-8')
+    
+        print(text)
+        address = re.search('the next nothing is \d+', text) #82682 alerta para o erro de buscar apenas o numero
+    
+        if address == None:
+            print ('Dividing url by two...')
+            purl = int(purl)/2 #como informado em 16044
+            geturl(str(purl), count+1)
+    
+        else:
+            address = re.search('\d+', address.group()) #separando apenas os numeros
+            address = (address.group())
+            if count < 400:
+                geturl(address, count+1)
+
+    geturl('12345', 0)
+
+    #no meio dos next nothings, um indica peak.html
